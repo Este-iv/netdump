@@ -26,8 +26,8 @@ int num_ip_packets;
 int num_apr_packets;
 
 // Global Var's for the code.
-uint16_t e_type = p[12]*256 + p[13];
-char* Hex_Stringformat = "%02X:%02X:%02X:%02X:%02X:%02X"
+uint16_t e_type ;
+char* Hex_Stringformat = "%02X:%02X:%02X:%02X:%02X:%02X";
 
 
 int packettype;
@@ -230,7 +230,7 @@ void raw_print(u_char *user, const struct pcap_pkthdr *h, const u_char *p)
         u_int caplen = h->caplen;
 
   // what to do about the Ethernet type... hmm... hmmm
-	e_type; // this thing needed right now??
+	e_type = p[12]*256 + p[13];
 
 	printf("E_Type = %04X ", e_type);
 	if (e_type == 0x800){

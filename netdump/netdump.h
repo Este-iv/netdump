@@ -31,9 +31,9 @@ and so on
 #define ADDRESS_LENGTH 6
 // struct implementation.
 struct APR_info{
-  u_char hrdwr_type, protocol_type;
-  u_char SHA[], SPA[], THA[], TPA[]; // 6,4,6,4 ... why is it like this??
-  u_int16_t hardware_Len, protcol_Len;
+  // u_char hrdwr_type, protocol_type;
+  // u_char SHA[], SPA[], THA[], TPA[]; // 6,4,6,4 ... why is it like this??
+  // u_int16_t hardware_Len, protcol_Len;
 }APR_t;
 
 struct TCP_info{
