@@ -25,10 +25,16 @@ void raw_print(u_char *user, const struct pcap_pkthdr *h, const u_char *p);
 int num_ip_packets;
 int num_apr_packets;
 
+// Global Var's for the code.
+uint16_t e_type = p[12]*256 + p[13];
+char* Hex_Stringformat = "%02X:%02X:%02X:%02X:%02X:%02X"
+
+
 int packettype;
 // counts needed are here.
-ip_count;
-arp_count;
+int IP_Counter,
+APR_Counter,
+ICMP_Counter;
 
 char *program_name;
 
@@ -223,22 +229,27 @@ void raw_print(u_char *user, const struct pcap_pkthdr *h, const u_char *p)
         u_int length = h->len;
         u_int caplen = h->caplen;
 
-	uint16_t e_type;
-  // what to do about the Ethernet type... hmm 
-	e_type = p[12]*256 + p[13];
+  // what to do about the Ethernet type... hmm... hmmm
+	e_type; // this thing needed right now??
+
 	printf("E_Type = %04X ", e_type);
 	if (e_type == 0x800){
-		num_ip_packets++;
+		    num_ip_packets++;
 	    	printf(" ->IP \n");
 	}
 	if (e_type == 0x806){
-		num_apr_packets++;
+		      num_apr_packets++;
 	        printf(" ->APR \n");
 	}
-
-
         printf("DEST Address = %02x:%02X:%02X:%02X:%02X:%02X:\n",
 		       	p[0],p[1],p[2],p[3],p[4],p[5],p[6]);
-
         putchar('\n');
+}
+
+
+void
+ ethernet_data(const u_char*p, u_int size){
+   header = (struct APR_info*)(p + 14);
+   APR_t* header = NULL;
+
 }
