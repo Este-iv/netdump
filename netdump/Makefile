@@ -10,7 +10,7 @@ CFLAGS = $(CCOPT) $(DEFS) $(INCLS)
 LDFLAGS =  -L/usr/local/lib
 
 # Standard LIBS
-LIBS = -lpcap 
+LIBS = -lpcap
 
 .c.o:
 	@rm -f $@
@@ -21,14 +21,17 @@ CSRC =	netdump.c \
 
 SRC =	$(CSRC) $(LOCALSRC)
 
-OBJ =	$(CSRC:.c=.o) $(GENSRC:.c=.o) $(LOCALSRC:.c=.o) 
+BIN = netdump
+$(BIN): $(OBJS)
+
+OBJ =	$(CSRC:.c=.o) $(GENSRC:.c=.o) $(LOCALSRC:.c=.o)
 HDR =
 
 CLEANFILES = $(PROG) $(OBJ)
 
 all: $(PROG)
 
-$(PROG): $(OBJ) 
+$(PROG): $(OBJ)
 	@rm -f $@
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(OBJ) $(LIBS)
 

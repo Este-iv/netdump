@@ -9,6 +9,9 @@
 #include <string.h>
 #include <unistd.h>
 
+//netdump.h file to simplify things.
+#include "netdump.h"
+
 #ifndef setsignal_h
 #define setsignal_h
 
@@ -18,12 +21,14 @@ RETSIGTYPE (*setsignal(int, RETSIGTYPE (*)(int)))(int);
 char cpre580f98[] = "netdump";
 
 void raw_print(u_char *user, const struct pcap_pkthdr *h, const u_char *p);
-
+//packet counters
 int num_ip_packets;
+int num_apr_packets;
 
 int packettype;
-
-int num_apr_packets;
+// counts needed are here.
+ip_count;
+arp_count;
 
 char *program_name;
 
@@ -58,7 +63,7 @@ main(int argc, char **argv)
 
 	cnt = -1;
 	device = NULL;
-	
+
 	if ((cp = strrchr(argv[0], '/')) != NULL)
 		program_name = cp + 1;
 	else
@@ -110,7 +115,7 @@ main(int argc, char **argv)
 
 	if (pcap_compile(pd, &fcode, cmdbuf, 1, netmask) < 0)
 		error("%s", pcap_geterr(pd));
-	
+
 	(void)setsignal(SIGTERM, program_ending);
 	(void)setsignal(SIGINT, program_ending);
 	/* Cooperate with nohup(1) */
@@ -142,7 +147,7 @@ void program_ending(int signo)
 			(void)fprintf(stderr, "pcap_stats: %s\n",
 			    pcap_geterr(pd));
 		else {
-		
+// packet counts go here.
 			(void)fprintf(stderr, "%d packets received by filter\n",
 			    stat.ps_recv);
 			(void)fprintf(stderr, "%d packets dropped by kernel\n",
@@ -153,6 +158,7 @@ void program_ending(int signo)
 					num_apr_packets);
 		}
 	}
+
 	exit(0);
 }
 
@@ -216,14 +222,12 @@ void raw_print(u_char *user, const struct pcap_pkthdr *h, const u_char *p)
 {
         u_int length = h->len;
         u_int caplen = h->caplen;
-	
+
 	uint16_t e_type;
-	
-
-
+  // what to do about the Ethernet type... hmm 
 	e_type = p[12]*256 + p[13];
 	printf("E_Type = %04X ", e_type);
-	if (e_type == 0x800){ 
+	if (e_type == 0x800){
 		num_ip_packets++;
 	    	printf(" ->IP \n");
 	}
@@ -238,4 +242,3 @@ void raw_print(u_char *user, const struct pcap_pkthdr *h, const u_char *p)
 
         putchar('\n');
 }
-
