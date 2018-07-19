@@ -248,7 +248,7 @@ void raw_print(u_char *user, const struct pcap_pkthdr *h, const u_char *p)
 
 
 void
- ethernet_data(const u_char*p, u_int size){
+ ethernet_data(const u_char* p, u_int size){
    header = (struct APR_info*)(p + 14);
    APR_t* header = NULL;
 
