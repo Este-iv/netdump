@@ -249,7 +249,7 @@ void raw_print(u_char *user, const struct pcap_pkthdr *h, const u_char *p)
 
 void
  ethernet_data(const u_char* p, u_int size){
-   *header = (struct APR_info*)(p + 14); // off of line 485... i have no idea what this should be... 
+   header = (struct APR_info*)(p + 14); // off of line 485... i have no idea what this should be...
    APR_t* header = NULL;
 
 }
