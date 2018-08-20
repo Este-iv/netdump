@@ -29,35 +29,49 @@ and so on
 #define NEW_SNAPLEN 1518
 #define ETHERNET_STANDARD 14
 #define ADDRESS_LENGTH 6
+
+
 // struct implementation.
+// This is to simplify the bit minipulation
 struct APR_info{
-  // u_char hrdwr_type, protocol_type;
-  // u_char SHA[], SPA[], THA[], TPA[]; // 6,4,6,4 ... why is it like this??
-  // u_int16_t hardware_Len, protcol_Len;
-}APR_t;
+  u_char hrdwr_type, protocol_type;
+  u_char Shardware_add[6], Sprotocol_add[4], Target_add[6], Target_Proto[4];
+  u_int16_t hardware_Len, protcol_Len;
+  u_int16_t Oper;
+};
 
 struct TCP_info{
-
-}TCP_t;
+  u_int32_t seq_num;
+  u_int32_t ack_num;
+  u_int16_t urp;
+  u_int16_t win,chksum;
+  u_int16_t src, dest; 
+  u_int16_t res:4, _soff:4;
+  u_int16_t  fn:1, sy:1, rs:1, ack:1, ug:1, ps:1;
+};
 
 struct ICMP_info{
-
-}ICMP_t;
+  u_int8_t type;
+  u_int8_t c;
+  u_int16_t _check;
+};
 
 struct IP_info {
-  u_int32_t sender, destination;
-  // figure out the rest of these.. need to ask the discord chat.
-  u_int8_t ;
-  u_int16_t ;
-}IP_t;
+  u_int8_t  type;
+  u_int8_t ver: 4, leng:4;
+  u_int8_t proto;
+  u_char source_add[4],dest_add[4];
+  u_int8_t ttl;
+  u_int16_t t_l ,ID,frag, chk;
+  u_int16_t id_type;
 
-// there is all this sniff shit... what is that for?
-// add it in later. I need to progress in the code to find out.
+};
+
 
 // creation of classes to be used in netdump.c
-// add packet print shit in here?? or make another .h file?
-void ethernet_data(const u_char* p, u_int size);
 
-
+void ARP_data(const u_char *p, u_int caplen, struct APR_info *arp); 
+void Declrations(const u_char *p, u_int caplen); 
+void IP_BASE(const u_char *p, u_int caplen, struct IP_info *ip);
 
 #endif

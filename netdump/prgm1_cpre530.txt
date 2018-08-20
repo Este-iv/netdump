@@ -3,6 +3,7 @@ program assignment 1:
 
 types of packets:
 1. 
+0x800: IP packet/ Ethernet II 
 	 0000 0c31 01aa 0050 5686 51be 0800 4500
 	 003c cac0 4000 4006 d069 4027 0395 36ab
 	 252b a6d0 01bb 95a2 8a39 0000 0000 a002
@@ -10,6 +11,8 @@ types of packets:
 	 62af 0000 0000 0103 0307
 
 2.
+
+0x806: arp packet/ Ethernet II 
 	 0000 39cf d9cd 0040 33d9 7cfd 0806 0001
 	 0800 0604 0001 0040 33d9 7cfd dfec baea
 	 0000 0000 0000 dfec bafa 0000 0000 0000
